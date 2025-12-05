@@ -9,7 +9,7 @@ module.exports = {
         message: [
           "git lfs install",
           "git clone https://huggingface.co/spaces/cocktailpeanut/DiffRhythm app",
-          "pnpm install",
+          "npm install",
         ]
       }
     },
