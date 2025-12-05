@@ -1,26 +1,17 @@
 const path = require('path')
 module.exports = {
-  version: "3.6",
+  version: "3.7",
   title: "DiffRhythm",
   description: "Generate songs with AI (up to 4 min 45 sec). Both with lyrics or instrumental https://github.com/ASLP-lab/DiffRhythm",
   icon: "icon.jpg",
-  links: [{
-    type: "bitcoin",
-    value: "bc1qx90z3ce9qz4p2pnt06gd0ytntl86qw4d6qv39k",
-//  }, {
-//    title: "X",
-//    value: "https://x.com/cocktailpeanut",
-//  }, {
-//    title: "Github",
-//    value: "https://github.com/cocktailpeanut",
-  }],
   menu: async (kernel, info) => {
     let installed = info.exists("app/env")
     let running = {
       install: info.running("install.js"),
       start: info.running("start.js"),
       update: info.running("update.js"),
-      reset: info.running("reset.js")
+      reset: info.running("reset.js"),
+      link: info.running("link.js")
     }
     if (running.install) {
       return [{
@@ -65,6 +56,13 @@ module.exports = {
           text: "Resetting",
           href: "reset.js",
         }]
+      } else if (running.link) {
+        return [{
+          default: true,
+          icon: 'fa-solid fa-terminal',
+          text: "Deduplicating",
+          href: "link.js",
+        }]
       } else {
         return [{
           default: true,
@@ -80,9 +78,14 @@ module.exports = {
           text: "Install",
           href: "install.js",
         }, {
+          icon: "fa-solid fa-file-zipper",
+          text: "<div><strong>Save Disk Space</strong><div>Deduplicates redundant library files</div></div>",
+          href: "link.js",
+        }, {
           icon: "fa-regular fa-circle-xmark",
-          text: "Reset",
+          text: "<div><strong>Reset</strong><div>Revert to pre-install state</div></div>",
           href: "reset.js",
+          confirm: "Are you sure you wish to reset the app?"
         }]
       }
     } else {
